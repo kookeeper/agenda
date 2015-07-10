@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<faces-config version="2.2" xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_2.xsd">
+	<navigation-rule>
+		<from-view-id>/*</from-view-id>
+		<navigation-case>
+			<from-outcome>error</from-outcome>
+			<to-view-id>/error.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/login.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>novoUsuario</from-outcome>
+			<to-view-id>/criarUsuario.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>novoUsuarioFacebook</from-outcome>
+			<to-view-id>/criarUsuarioFacebook.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>loginFB</from-outcome>
+			<to-view-id>/pages/agenda.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>agenda</from-outcome>
+			<to-view-id>/pages/agenda.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/criarUsuario.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>login</from-outcome>
+			<to-view-id>/login.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<display-name>pages/listarConsultorio.xhtml</display-name>
+		<from-view-id>/pages/listarConsultorio.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>agenda</from-outcome>
+			<to-view-id>/pages/agenda.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/pages/agenda.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>listarConsultorio</from-outcome>
+			<to-view-id>/pages/listarConsultorio.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<display-name>pages/trocarSenha.xhtml</display-name>
+		<from-view-id>/pages/trocarSenha.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>login</from-outcome>
+			<to-view-id>/pages/agenda.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<display-name>login.xhtml</display-name>
+		<from-view-id>/login.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>trocarSenha</from-outcome>
+			<to-view-id>/pages/trocarSenha.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<display-name>pages/agenda.xhtml</display-name>
+		<from-view-id>/pages/agenda.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>trocarSenha</from-outcome>
+			<to-view-id>/pages/trocarSenha.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<application>
+		<el-resolver>org.springframework.web.jsf.el.SpringBeanFacesELResolver</el-resolver>
+		<locale-config>
+			<default-locale>pt</default-locale>
+		</locale-config>
+	</application>
+	<factory>
+		<exception-handler-factory>br.com.msystem.exception.CustomExceptionHandlerFactory</exception-handler-factory>
+	</factory>
+<!-- 
+	<lifecycle>
+	    <phase-listener>com.liferay.faces.util.lifecycle.DebugPhaseListener</phase-listener>
+		<phase-listener>com.liferay.faces.util.lifecycle.ViewScopePhaseListener</phase-listener>
+	</lifecycle>
+-->
+</faces-config>

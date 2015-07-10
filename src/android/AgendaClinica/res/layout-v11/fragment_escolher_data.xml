@@ -1,0 +1,20 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/escolher_data_fragment"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <CalendarView
+        android:id="@+id/escolher_calendar_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:saveEnabled="true" />
+
+    <Button
+        android:id="@+id/botao_pesquisar_data"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/escolher_calendar_view"
+        android:text="@string/botao_pesquisar_data" />
+
+</RelativeLayout>

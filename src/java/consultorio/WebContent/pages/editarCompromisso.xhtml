@@ -1,0 +1,208 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:fu="http://java.sun.com/jsp/jstl/functions"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition>
+	<h:panelGroup style="min-width: 600px;" layout="block">
+		<h:form>
+			<p:messages autoUpdate="true" closable="true" />
+			<h:panelGrid>
+				<h:panelGroup>
+					<div class="row">
+						<div class="col-lg-8">
+							<div class="form-group">
+								<p:outputLabel for="medico">Medico</p:outputLabel>
+								<h:outputText id="medico" styleClass="form-control"
+									value="#{compromissoBean.compromissoSelecionado.pessoaMedico.nomePessoa}" />
+							</div>
+						</div>
+						<div class="col-lg-4">
+							<div class="form-group checkbox">
+								<p:outputLabel for="compareceu">Compareceu?  </p:outputLabel>
+								<p:selectBooleanButton onLabel="Sim" offLabel="Nao"
+									id="compareceu"
+									value="#{compromissoBean.compromissoSelecionado.compareceu}" />
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-lg-8">
+							<div class="form-group">
+								<p:outputLabel for="paciente">Paciente</p:outputLabel>
+
+								<c:choose>
+									<c:when test="#{compromissoBean.editandoCompromisso()}">
+										<h:outputText styleClass="form-control" id="paciente"
+											value="#{compromissoBean.compromissoSelecionado.pessoaPaciente.nomePessoa}" />
+									</c:when>
+									<c:otherwise>
+										<br />
+										<p:selectOneMenu id="paciente" required="true"
+											requiredMessage="Escolha um paciente"
+											value="#{compromissoBean.compromissoSelecionado.pessoaPaciente}"
+											converter="pessoaConverter">
+											<f:selectItems value="#{compromissoBean.listaPaciente}"
+												var="paciente" itemValue="#{paciente}"
+												itemLabel="#{paciente.nomePessoa}" />
+										</p:selectOneMenu>
+									</c:otherwise>
+								</c:choose>
+							</div>
+						</div>
+						<div class="col-lg-4">
+							<div class="form-group">
+								<p:outputLabel for="dataCompromisso">Data</p:outputLabel>
+								<c:choose>
+									<c:when test="#{compromissoBean.editandoCompromisso()}">
+										<h:outputText styleClass="form-control" id="dataCompromisso"
+											value="#{compromissoBean.compromissoSelecionado.dataCompromisso}" />
+									</c:when>
+									<c:otherwise>
+										<br />
+										<p:calendar id="dataCompromisso"
+											value="#{compromissoBean.compromissoSelecionado.dataCompromisso}"
+											pattern="dd/MM/yyyy HH:mm" showButtonPanel="true">
+											<f:converter converterId="dateToTimestampConverter" />
+										</p:calendar>
+									</c:otherwise>
+								</c:choose>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-lg-6">
+							<div class="form-group">
+								<p:outputLabel for="tipoCompromisso">Tipo</p:outputLabel>
+								<c:choose>
+									<c:when test="#{compromissoBean.editandoCompromisso()}">
+										<h:outputText styleClass="form-control" id="tipoCompromisso"
+											value="#{compromissoBean.compromissoSelecionado.tipoCompromisso.descricaoTipoCompromisso}" />
+									</c:when>
+									<c:otherwise>
+										<br />
+										<p:selectOneMenu id="tipoCompromisso" required="true"
+											requiredMessage="Escolha um tipo"
+											value="#{compromissoBean.compromissoSelecionado.tipoCompromisso}"
+											converter="tipoCompromissoConverter">
+											<f:selectItems
+												value="#{compromissoBean.listaTipoCompromisso}"
+												var="tipoCompromisso" itemValue="#{tipoCompromisso}"
+												itemLabel="#{tipoCompromisso.descricaoTipoCompromisso}" />
+										</p:selectOneMenu>
+									</c:otherwise>
+								</c:choose>
+							</div>
+						</div>
+						<div class="col-lg-6">
+							<div class="form-group">
+								<p:outputLabel for="convenio">Convênio</p:outputLabel>
+								<c:choose>
+									<c:when test="#{compromissoBean.editandoCompromisso()}">
+										<h:outputText styleClass="form-control" id="convenio"
+											value="#{compromissoBean.compromissoSelecionado.convenio.nomeConvenio}" />
+									</c:when>
+									<c:otherwise>
+										<br />
+										<p:selectOneMenu id="convenio" required="true"
+											requiredMessage="Escolha um convênio"
+											value="#{compromissoBean.compromissoSelecionado.convenio}"
+											converter="convenioConverter">
+											<p:ajax listener="#{compromissoBean.atualizaValorCobrado()}" update="valorCobrado" />
+											<f:selectItem noSelectionOption="true"/>
+											<f:selectItems value="#{compromissoBean.listaConvenio}"
+												var="convenio" itemValue="#{convenio}"
+												itemLabel="#{convenio.nomeConvenio}" />
+										</p:selectOneMenu>
+									</c:otherwise>
+								</c:choose>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-lg-6">
+							<div class="form-group">
+								<p:outputLabel for="valorCobrado">Valor Cobrado</p:outputLabel>
+								<c:choose>
+									<c:when test="#{compromissoBean.editandoCompromisso()}">
+										<h:outputText styleClass="form-control" id="valorCobrado"
+											value="#{compromissoBean.compromissoSelecionado.valorCobrado}" />
+									</c:when>
+									<c:otherwise>
+										<p:inputText id="valorCobrado" required="true"
+											styleClass="form-control"
+											requiredMessage="Escolha o valor cobrado"
+											value="#{compromissoBean.compromissoSelecionado.valorCobrado}" />
+									</c:otherwise>
+								</c:choose>
+							</div>
+						</div>
+						<div class="col-lg-6">
+							<div class="form-group">
+								<p:outputLabel for="valorPago">Valor Pago</p:outputLabel>
+								<p:inputText id="valorPago" styleClass="form-control"
+									value="#{compromissoBean.compromissoSelecionado.valorPago}" />
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-lg-12">
+							<div class="form-group">
+								<p:fieldset legend="Observação" toggleable="true"
+									collapsed="true">
+
+									<c:when test="#{compromissoBean.editandoCompromisso()}">
+										<p:dataTable id="observacaoDataTable"
+											value="#{compromissoBean.compromissoSelecionado.observacaos}"
+											emptyMessage="Não existem observações cadastradas"
+											var="observacao">
+
+											<p:column>
+												<h:outputText value="#{observacao.dataObservacao}" />
+											</p:column>
+											<p:column>
+												<h:outputText value="#{observacao.observacao}" />
+											</p:column>
+										</p:dataTable>
+									</c:when>
+
+									<p:inputTextarea id="observacao"
+										value="#{compromissoBean.novaObservacao}" style="width: 100%;" />
+								</p:fieldset>
+							</div>
+						</div>
+					</div>
+				</h:panelGroup>
+				<f:facet name="footer">
+					<h:panelGroup>
+						<div class="row">
+							<div class="col-lg-12">
+								<p:commandButton icon="ui-icon-circle-check"
+									action="#{compromissoBean.salvarCompromisso()}"
+									oncomplete="if (!args.validationFailed) PF('compromissoDialog').hide();"
+									update=":form:compromissoDataTable" />
+								<p:commandButton icon="ui-icon-circle-close"
+									onclick="PF('compromissoDialog').hide();">
+									<p:confirm header="Cancelar Edicao"
+										message="Deseja cancelar a edicao?" icon="ui-icon-alert" />
+								</p:commandButton>
+								<p:confirmDialog global="true">
+									<p:commandButton value="Yes" type="button"
+										styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+									<p:commandButton value="No" type="button"
+										styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+								</p:confirmDialog>
+							</div>
+						</div>
+					</h:panelGroup>
+				</f:facet>
+			</h:panelGrid>
+		</h:form>
+	</h:panelGroup>
+
+</ui:composition>
+</html>

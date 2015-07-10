@@ -1,0 +1,90 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="/WEB-INF/templates/template.xhtml">
+	<ui:define name="content">
+		<h:form id="listaConsultorioForm">
+			<p:dataTable value="#{consultorioBean.listaConsultorio}"
+				var="consultorio">
+				<p:column headerText="C.N.P.J.">
+					<h:outputText value="#{consultorio.cnpjConsultorio}" />
+				</p:column>
+				<p:column headerText="Razao Social">
+					<h:outputText value="#{consultorio.razaoSocialConsultorio}" />
+				</p:column>
+				<p:column headerText="Acoes">
+					<p:commandButton icon="ui-icon-circle-triangle-n"
+						action="#{consultorioBean.editarConsultorio(consultorio)}"
+						update=":editDialog" oncomplete="PF('editDialog').show();" />
+					<p:commandButton icon="ui-icon-circle-minus"
+						action="#{consultorioBean.excluirConsultorio(consultorio)}"
+						update=":listaConsultorioForm">
+						<p:confirm header="Excluir Consultorio"
+							message="Deseja excluir o consultorio?" icon="ui-icon-alert" />
+					</p:commandButton>
+					<p:commandButton value="Medicos"
+						action="#{pessoaBean.editarPessoas(consultorio)}"
+						oncomplete="PF('editPessoasDialog').show();"
+						update=":editPessoasDialog">
+						<f:setPropertyActionListener
+							target="#{pessoaBean.escolherTipoPessoa}" value="1" />
+					</p:commandButton>
+					<p:commandButton value="Pacientes"
+						action="#{pessoaBean.editarPessoas(consultorio)}"
+						oncomplete="PF('editPessoasDialog').show();"
+						update=":editPessoasDialog">
+						<f:setPropertyActionListener
+							target="#{pessoaBean.escolherTipoPessoa}" value="2" />
+					</p:commandButton>
+					<p:commandButton value="Convênios"
+						action="#{convenioBean.listarConvenio(consultorio)}"
+						oncomplete="PF('listarConvenioDialog').show();"
+						update=":listarConvenioDialog" />
+				</p:column>
+			</p:dataTable>
+			<p:commandButton icon="ui-icon-circle-plus"
+				action="#{consultorioBean.adicionarConsultorio}"
+				oncomplete="PF('editDialog').show();" update=":editDialog" />
+		</h:form>
+
+		<p:dialog modal="true" id="editPessoasDialog"
+			widgetVar="editPessoasDialog" header="#{pessoaBean.tituloLista}">
+			<ui:include src="listarPessoa.xhtml" />
+		</p:dialog>
+
+		<p:dialog modal="true" id="editDialog" widgetVar="editDialog"
+			header="Editar Consultorio">
+			<ui:include src="editarConsultorio.xhtml" />
+		</p:dialog>
+
+		<p:dialog modal="true" id="editPessoaDialog"
+			widgetVar="editPessoaDialog" header="#{pessoaBean.tituloEditar}">
+			<ui:include src="editarPessoa.xhtml" />
+		</p:dialog>
+
+		<p:dialog modal="true" id="incluirImagemDialog"
+			widgetVar="incluirImagemDialog" header="Incluir Imagem">
+			<h:form>
+				<p:fileUpload fileUploadListener="#{pessoaBean.uploadImagem}"
+					update=":editarPessoa" />
+			</h:form>
+		</p:dialog>
+
+		<p:dialog modal="true" id="listarConvenioDialog"
+			widgetVar="listarConvenioDialog" header="Listar Convênios">
+			<ui:include src="listarConvenio.xhtml" />
+		</p:dialog>
+
+		<p:dialog modal="true" id="editarConvenioDialog"
+			widgetVar="editarConvenioDialog" header="Editar Convênio">
+			<ui:include src="editarConvenio.xhtml" />
+		</p:dialog>
+
+	</ui:define>
+</ui:composition>
+</html>

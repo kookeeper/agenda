@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<entity-mappings version="1.0"
+	xmlns="http://java.sun.com/xml/ns/persistence/orm" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/persistence/orm http://java.sun.com/xml/ns/persistence/orm_1_0.xsd ">
+
+	<named-query name="Usuario.login">
+		<query>
+			SELECT u FROM Usuario u where u.login = :login and u.senha=:senha
+		</query>
+	</named-query>
+	<named-query name="Usuario.pesquisarLogin">
+		<query>
+			SELECT u FROM Usuario u where u.login = ?
+		</query>
+	</named-query>
+	<named-query name="UsuarioFacebook.pesquisarLogin">
+		<query>
+			SELECT u FROM UsuarioFacebook u where u.usuarioFacebook = ?
+		</query>
+	</named-query>
+	<named-query name="Consultorio.listarPorPessoa">
+		<query>
+			SELECT c FROM Consultorio c	INNER JOIN c.consultorioPessoas cp WHERE cp.pessoa.pessoaSq = ?
+		</query>
+	</named-query>
+	<named-query name="Pessoa.listarPacientePorPessoa">
+		<query>
+			SELECT distinct p FROM Pessoa p INNER JOIN p.consultorios c INNER JOIN c.consultorioPessoas cp WHERE cp.pessoa.pessoaSq = ? and cp.tipoPessoa.tipoPessoaSq = 2
+		</query>
+	</named-query>
+	<named-query name="Pessoa.listarMedicoPorPessoa">
+		<query>
+			SELECT distinct p FROM Pessoa p INNER JOIN p.consultorios c INNER JOIN c.consultorioPessoas cp WHERE cp.pessoa.pessoaSq = ? and cp.tipoPessoa.tipoPessoaSq = 1
+		</query>
+	</named-query>
+	<named-query name="Pessoa.listarPessoaPorPessoa">
+		<query>
+			SELECT distinct p FROM Pessoa p INNER JOIN p.consultorioPessoas cp WHERE cp.pessoa.pessoaSq = ? and cp.tipoPessoa.tipoPessoaSq = ?
+		</query>
+	</named-query>
+	<named-query name="Pessoa.listarPessoaPorConsultorio">
+		<query>
+			SELECT distinct p FROM Pessoa p INNER JOIN p.consultorioPessoas cp WHERE cp.consultorio.consultorioSq = ? and cp.tipoPessoa.tipoPessoaSq = ?
+		</query>
+	</named-query>
+	<named-query name="Compromisso.listarCompromissoPorMedico">
+		<query>
+			SELECT c FROM Compromisso c WHERE c.pessoaMedico.pessoaSq = ? and c.dataCompromisso between ? and ?
+		</query>
+	</named-query>
+	<named-query name="Pessoa.listarObservacao">
+		<query>
+			SELECT o FROM Observacao o WHERE o.compromisso.pessoaPaciente.pessoaSq = ?
+		</query>
+	</named-query>
+	<named-query name="PessoaImagem.listarImagem">
+		<query>select pi from PessoaImagem pi where pi.pessoa.pessoaSq = ?</query>
+	</named-query>
+	<named-query name="Convenio.listarConvenioPorConsultorio">
+		<query>select c from Convenio c where c.consultorio.consultorioSq = ?</query>
+	</named-query>
+	
+</entity-mappings>

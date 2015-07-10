@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Agenda Clínica</string>
+    <string name="title_activity_login">LoginActivity</string>
+    <string name="titulo">Agenda Clínica</string>
+    <string name="action_settings">Settings</string>
+    <string name="digite_login">Digite o login</string>
+    <string name="digite_senha">Digite a senha</string>
+    <string name="login">Login</string>
+    <string name="senha">senha</string>
+    <string name="tentativas">Tentativas</string>
+    <string name="title_activity_agenda">AgendaActivity</string>
+    <string name="title_section1">Section 1</string>
+    <string name="title_section2">Section 2</string>
+    <string name="title_section3">Section 3</string>
+    <string name="texto_fragmento">Texto</string>
+    <string name="botao_voltar">Voltar</string>
+    <string name="botao_consultar">Consultar</string>
+
+</resources>

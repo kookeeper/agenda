@@ -1,0 +1,270 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition>
+	<h:form id="editarPessoa" enctype="multipart/mixed">
+		<div class="row">
+			<div class="col-lg-12">
+				<p:outputLabel value="C.P.F." />
+				<p:inputText styleClass="form-control"
+					value="#{pessoaBean.pessoa.cpfPessoa}" maxlength="11" />
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-lg-12">
+				<p:outputLabel value="Nome" />
+				<p:inputText styleClass="form-control"
+					value="#{pessoaBean.pessoa.nomePessoa}" />
+			</div>
+		</div>
+		<br />
+		<div class="row">
+			<div class="col-lg-12">
+				<p:tabView>
+					<p:tab id="tabEndereco" title="Enderecos">
+						<div class="row">
+							<div class="col-lg-12">
+								<p:dataTable value="#{pessoaBean.pessoa.enderecos}"
+									var="endereco" id="enderecoDataTable" editable="true">
+
+									<p:column headerText="Bairro">
+										<p:cellEditor>
+											<f:facet name="output">
+												<h:outputText value="#{endereco.bairro}" />
+											</f:facet>
+											<f:facet name="input">
+												<h:inputText styleClass="form-control"
+													value="#{endereco.bairro}" />
+											</f:facet>
+										</p:cellEditor>
+									</p:column>
+									<p:column headerText="C.E.P.">
+										<p:cellEditor>
+											<f:facet name="output">
+												<h:outputText value="#{endereco.cep}" />
+											</f:facet>
+											<f:facet name="input">
+												<h:inputText styleClass="form-control"
+													value="#{endereco.cep}" />
+											</f:facet>
+										</p:cellEditor>
+									</p:column>
+									<p:column headerText="Complemento">
+										<p:cellEditor>
+											<f:facet name="output">
+												<h:outputText value="#{endereco.complemento}" />
+											</f:facet>
+											<f:facet name="input">
+												<h:inputText styleClass="form-control"
+													value="#{endereco.complemento}" />
+											</f:facet>
+										</p:cellEditor>
+									</p:column>
+									<p:column headerText="Logradouro">
+										<p:cellEditor>
+											<f:facet name="output">
+												<h:outputText value="#{endereco.logradouro}" />
+											</f:facet>
+											<f:facet name="input">
+												<h:inputText styleClass="form-control"
+													value="#{endereco.logradouro}" />
+											</f:facet>
+										</p:cellEditor>
+									</p:column>
+									<p:column headerText="Numero">
+										<p:cellEditor>
+											<f:facet name="output">
+												<h:outputText value="#{endereco.numero}" />
+											</f:facet>
+											<f:facet name="input">
+												<h:inputText styleClass="form-control"
+													value="#{endereco.numero}" />
+											</f:facet>
+										</p:cellEditor>
+									</p:column>
+									<p:column headerText="Tipo">
+										<p:cellEditor>
+											<f:facet name="output">
+												<h:outputText
+													value="#{endereco.tipoEndereco.descricaoTipoEndereco}" />
+											</f:facet>
+											<f:facet name="input">
+												<p:selectOneMenu value="#{endereco.tipoEndereco}">
+													<f:converter converterId="tipoEnderecoConverter" />
+													<f:selectItems value="#{pessoaBean.listaTipoEndereco}"
+														var="tipoEndereco" itemValue="#{tipoEndereco}"
+														itemLabel="#{tipoEndereco.descricaoTipoEndereco}" />
+												</p:selectOneMenu>
+											</f:facet>
+										</p:cellEditor>
+									</p:column>
+									<p:column style="width:6%">
+										<p:rowEditor />
+										<p:commandButton icon="ui-icon-circle-minus"
+											action="#{pessoaBean.removerEndereco(endereco)}"
+											update=":editarPessoa">
+											<p:confirm header="Excluir Endereco"
+												message="Deseja excluir o endereco?" icon="ui-icon-alert" />
+										</p:commandButton>
+									</p:column>
+								</p:dataTable>
+							</div>
+						</div>
+
+						<div class="row">
+							<div class="col-lg-12">
+								<p:commandButton icon="ui-icon-circle-plus"
+									action="#{pessoaBean.incluirEndereco}" update=":editarPessoa"
+									immediate="true" />
+							</div>
+						</div>
+					</p:tab>
+					<p:tab id="tabTelefone" title="Telefones">
+						<div class="row">
+							<div class="col-lg-12">
+								<p:dataTable value="#{pessoaBean.pessoa.telefones}"
+									var="telefone" editable="true">
+									<p:column headerText="Tipo">
+										<p:cellEditor>
+											<f:facet name="output">
+												<h:outputText
+													value="#{telefone.tipoTelefone.descricaoTipoTelefone}" />
+											</f:facet>
+											<f:facet name="input">
+												<p:selectOneMenu value="#{telefone.tipoTelefone}">
+													<f:converter converterId="tipoTelefoneConverter" />
+													<f:selectItems value="#{pessoaBean.listaTipoTelefone}"
+														var="tipoTelefone" itemValue="#{tipoTelefone}"
+														itemLabel="#{tipoTelefone.descricaoTipoTelefone}" />
+												</p:selectOneMenu>
+											</f:facet>
+										</p:cellEditor>
+									</p:column>
+									<p:column headerText="Numero">
+										<p:cellEditor>
+											<f:facet name="output">
+												<h:outputText value="#{telefone.numeroTelefone}" />
+											</f:facet>
+											<f:facet name="input">
+												<h:inputText styleClass="form-control"
+													value="#{telefone.numeroTelefone}" />
+											</f:facet>
+										</p:cellEditor>
+									</p:column>
+									<p:column headerText="Ramal">
+										<p:cellEditor>
+											<f:facet name="output">
+												<h:outputText value="#{telefone.ramalTelefone}" />
+											</f:facet>
+											<f:facet name="input">
+												<h:inputText styleClass="form-control"
+													value="#{telefone.ramalTelefone}" />
+											</f:facet>
+										</p:cellEditor>
+									</p:column>
+									<p:column style="width:6%">
+										<p:rowEditor />
+										<p:commandButton icon="ui-icon-circle-minus"
+											action="#{pessoaBean.removerTelefone(telefone)}"
+											update=":editarPessoa">
+											<p:confirm header="Excluir Telefone"
+												message="Deseja excluir o telefone?" icon="ui-icon-alert" />
+										</p:commandButton>
+									</p:column>
+								</p:dataTable>
+							</div>
+						</div>
+
+						<div class="row">
+							<div class="col-lg-12">
+								<p:commandButton icon="ui-icon-circle-plus"
+									action="#{pessoaBean.incluirTelefone}" update=":editarPessoa"
+									immediate="true" />
+							</div>
+						</div>
+					</p:tab>
+					<p:tab id="tabUsuario" title="Usuario associado"
+						rendered="#{pessoaBean.tipoPessoa.tipoPessoaSq == Constantes.TIPO_PESSOA_MEDICO.tipoPessoaSq}">
+						<h:panelGroup id="possuiUsuario"
+							rendered="#{not empty pessoaBean.pessoa.usuarios}">
+							<div class="row">
+								<div class="col-lg-12">
+									<p:outputLabel value="Usuário" />
+									<p:outputLabel styleClass="form-control"
+										value="#{pessoaBean.pessoa.usuarios[0].login}" />
+								</div>
+							</div>
+						</h:panelGroup>
+						<h:panelGroup id="naoPossuiUsuario"
+							rendered="#{empty pessoaBean.pessoa.usuarios}">
+							<div class="row">
+								<div class="col-lg-12">
+									<p:outputLabel value="Digite o login do usuário" />
+									<p:inputText styleClass="form-control"
+										value="#{pessoaBean.novoUsuario}" />
+									<p:outputLabel
+										style="font-style: italic; font-weight: lighter;"
+										value="Se o usuário não existir, um novo será criado, com a senha igual ao login" />
+								</div>
+							</div>
+						</h:panelGroup>
+					</p:tab>
+					<p:tab id="tabImagem" title="Imagens">
+						<div class="row">
+							<div class="col-lg-10">
+								<h:panelGroup id="carouselImagem">
+									<c:if test="#{not empty pessoaBean.listaImagemUpload}">
+										<p:galleria value="#{pessoaBean.listaImagemUpload}"
+											autoPlay="false" panelHeight="200" var="imagemUpload">
+											<p:graphicImage id="imagem"
+												value="#{imagemBean.imagemByPath}" style="max-height: 200px"
+												cache="false">
+												<f:param name="fileName" value="#{imagemUpload}" />
+											</p:graphicImage>
+											<p:commandButton icon="ui-icon-trash"
+												actionListener="#{pessoaBean.removerImagem}"
+												update="carouselImagem">
+												<f:param name="fileName" value="#{imagemUpload}" />
+											</p:commandButton>
+										</p:galleria>
+									</c:if>
+								</h:panelGroup>
+							</div>
+							<div class="col-lg-2">
+								<p:commandButton icon="ui-icon-circle-plus"
+									oncomplete="PF('incluirImagemDialog').show();" />
+							</div>
+						</div>
+					</p:tab>
+				</p:tabView>
+			</div>
+		</div>
+		<br />
+		<div class="row">
+			<div class="col-lg-12">
+				<p:commandButton icon="ui-icon-circle-check"
+					action="#{pessoaBean.salvarPessoa()}"
+					oncomplete="if (!args.validationFailed) PF('editPessoaDialog').hide();"
+					update=":listaPessoaForm" />
+				<p:commandButton icon="ui-icon-circle-close"
+					onclick="PF('editPessoaDialog').hide();">
+					<p:confirm header="Cancelar Edicao"
+						message="Deseja cancelar a edicao?" icon="ui-icon-alert" />
+				</p:commandButton>
+				<p:confirmDialog global="true">
+					<p:commandButton value="Yes" type="button"
+						styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+					<p:commandButton value="No" type="button"
+						styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+				</p:confirmDialog>
+			</div>
+		</div>
+	</h:form>
+
+</ui:composition>
+</html>

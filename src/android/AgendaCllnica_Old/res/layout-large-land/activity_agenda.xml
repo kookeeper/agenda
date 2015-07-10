@@ -1,0 +1,34 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/pager"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="br.com.msystem.agendacllnica.AgendaActivity" >
+
+    <TextView
+        android:id="@+id/login"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/login" 
+        android:baselineAligned="false">
+
+        <FrameLayout
+            android:id="@+id/fragment_calendario_container"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight=".50" >
+        </FrameLayout>
+
+        <FrameLayout
+            android:id="@+id/fragment_listacompromisso_container"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight=".50" >
+        </FrameLayout>
+    </LinearLayout>
+
+</RelativeLayout>

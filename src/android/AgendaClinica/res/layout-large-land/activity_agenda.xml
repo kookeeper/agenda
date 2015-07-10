@@ -1,0 +1,25 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/agenda_activity"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:baselineAligned="false" >
+
+    <FrameLayout
+        android:id="@+id/escolher_data_frame"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight=".20" />
+
+    <FrameLayout
+        android:id="@+id/lista_compromisso_frame"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight=".40" />
+
+    <FrameLayout
+        android:id="@+id/visualizar_compromisso_frame"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight=".40" />
+
+</LinearLayout>

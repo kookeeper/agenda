@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="1.0"
+	xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_1_0.xsd">
+	<persistence-unit name="test">
+		<class>br.com.msystem.db.entity.Compromisso</class>
+		<class>br.com.msystem.db.entity.Consultorio</class>
+		<class>br.com.msystem.db.entity.ConsultorioPessoa</class>
+		<class>br.com.msystem.db.entity.Convenio</class>
+		<class>br.com.msystem.db.entity.Endereco</class>
+		<class>br.com.msystem.db.entity.Observacao</class>
+		<class>br.com.msystem.db.entity.Pessoa</class>
+		<class>br.com.msystem.db.entity.PessoaImagem</class>
+		<class>br.com.msystem.db.entity.PessoaImagemMetadado</class>
+		<class>br.com.msystem.db.entity.Telefone</class>
+		<class>br.com.msystem.db.entity.TipoCompromisso</class>
+		<class>br.com.msystem.db.entity.TipoEndereco</class>
+		<class>br.com.msystem.db.entity.TipoPessoa</class>
+		<class>br.com.msystem.db.entity.TipoTelefone</class>
+		<class>br.com.msystem.db.entity.Usuario</class>
+		<class>br.com.msystem.db.entity.UsuarioFacebook</class>
+		<exclude-unlisted-classes>false</exclude-unlisted-classes>
+	</persistence-unit>
+</persistence>

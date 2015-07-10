@@ -1,0 +1,111 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+          "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+
+<h:head>
+	<pe:importConstants className="br.com.msystem.util.Constantes"
+		var="Constantes" />
+	<title><ui:insert name="title">Agenda Clínica</ui:insert></title>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+	<meta http-equiv="content-language" content="pt-br" />
+	<meta name="author" lang="pt-br"
+		content="Sergio Samaan; spsamaan@gmail.com" />
+	<meta name="copyright" lang="pt-br"
+		content="Sergio Samaan; spsamaan@gmail.com" />
+	<meta name="description"
+		content="Agenda clínica para consultórios e clínicas" />
+	<meta name="keywords" content="agenda clinica" />
+	<meta name="robots" content="all,follow" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+	<link href="#{request.contextPath}/css/screen.css" type="text/css"
+		rel="stylesheet" media="screen,projection" />
+
+	<!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet"
+		href="#{request.contextPath}/bootstrap-3.1.1-dist/css/bootstrap.min.css" />
+
+	<!-- Optional theme -->
+	<link rel="stylesheet"
+		href="#{request.contextPath}/bootstrap-3.1.1-dist/css/bootstrap-theme.min.css" />
+
+	<h:outputScript library="primefaces" name="jquery/jquery.js" />
+	<h:outputScript library="primefaces" name="primefaces.js" />
+
+	<!-- Latest compiled and minified JavaScript -->
+	<script
+		src="#{request.contextPath}/bootstrap-3.1.1-dist/js/bootstrap.min.js"></script>
+
+	<script type="text/javascript">
+		PrimeFaces.locales['pt'] = {
+			closeText : 'Fechar',
+			prevText : 'Anterior',
+			nextText : 'Próximo',
+			currentText : 'Começo',
+			monthNames : [ 'Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio',
+					'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro',
+					'Novembro', 'Dezembro' ],
+			monthNamesShort : [ 'Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun',
+					'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez' ],
+			dayNames : [ 'Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta',
+					'Sexta', 'Sábado' ],
+			dayNamesShort : [ 'Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb' ],
+			dayNamesMin : [ 'D', 'S', 'T', 'Q', 'Q', 'S', 'S' ],
+			weekHeader : 'Semana',
+			firstDay : 0,
+			isRTL : false,
+			showMonthAfterYear : false,
+			yearSuffix : '',
+			timeOnlyTitle : 'Só Horas',
+			timeText : 'Tempo',
+			hourText : 'Hora',
+			minuteText : 'Minuto',
+			secondText : 'Segundo',
+			ampm : false,
+			month : 'Mês',
+			week : 'Semana',
+			day : 'Dia',
+			allDayText : 'Todo o Dia'
+		};
+	</script>
+
+</h:head>
+<body>
+	<div id="fb-root"></div>
+	<div id="layout">
+
+		<div id="header">
+			<ui:insert name="header">
+				<ui:include src="header.xhtml" />
+			</ui:insert>
+		</div>
+
+		<div id="main">
+			<p:growl autoUpdate="true" showSummary="true" />
+			<p:messages autoUpdate="true" showDetail="true" showSummary="true"
+				closable="true" />
+
+			<ui:insert name="content">
+    	Content area.  See comments below this line in the source.
+    	<!--  include your content file or uncomment the include below and create content.xhtml in this directory -->
+				<!-- <div> -->
+				<!-- <ui:include src="content.xhtml"/> -->
+				<!-- </div> -->
+			</ui:insert>
+		</div>
+
+		<div id="footer">
+			<ui:insert name="footer">
+				<ui:include src="footer.xhtml" />
+			</ui:insert>
+		</div>
+
+	</div>
+</body>
+
+</html>

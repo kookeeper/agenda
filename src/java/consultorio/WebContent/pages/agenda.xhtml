@@ -1,0 +1,154 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:fu="http://java.sun.com/jsp/jstl/functions"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="/WEB-INF/templates/template.xhtml">
+	<ui:define name="content">
+		<h:form id="form">
+			<div class="row">
+				<div class="col-lg-5 col-sm-5 col-xs-5 consultorioSelect">
+					<div class="form-group">
+						<p:outputLabel for="consultorioSelect">Consultorio</p:outputLabel>
+						<c:choose>
+							<c:when
+								test="#{fu:length(compromissoBean.listaConsultorio) == 0}">
+								<h:outputText id="consultorioSelect" styleClass="form-control"
+									value="Não há consultorio cadastrado" />
+							</c:when>
+							<c:when
+								test="#{fu:length(compromissoBean.listaConsultorio) == 1}">
+								<h:outputText id="consultorioSelect" styleClass="form-control"
+									value="#{compromissoBean.consultorioSelecionado.razaoSocialConsultorio}" />
+							</c:when>
+							<c:otherwise>
+								<p:selectOneMenu id="consultorioSelect" style="width: 100%"
+									value="#{compromissoBean.consultorioSelecionado}"
+									converter="consultorioConverter">
+									<f:selectItems value="#{compromissoBean.listaConsultorio}"
+										var="consultorio" itemValue="#{consultorio}"
+										itemLabel="#{consultorio.razaoSocialConsultorio}" />
+									<p:ajax update="medicoSelectPanel"
+										listener="#{compromissoBean.atualizarListaPessoa}" />
+								</p:selectOneMenu>
+							</c:otherwise>
+						</c:choose>
+					</div>
+				</div>
+				<div class="col-lg-2 col-sm-2 col-xs-2"></div>
+				<div class="col-lg-5 col-sm-5 col-xs-5 medicoSelect">
+					<div class="form-group">
+						<h:panelGroup id="medicoSelectPanel">
+							<p:outputLabel for="medicoSelect">Medico</p:outputLabel>
+							<c:choose>
+								<c:when test="#{fu:length(compromissoBean.listaMedico) == 0}">
+									<h:outputText id="medicoSelect" styleClass="form-control"
+										value="Não há medico cadastrado" />
+								</c:when>
+								<c:when test="#{fu:length(compromissoBean.listaMedico) == 1}">
+									<h:outputText id="medicoSelect" styleClass="form-control"
+										value="#{compromissoBean.medicoSelecionado.nomePessoa}" />
+								</c:when>
+								<c:otherwise>
+									<p:selectOneMenu id="medicoSelect"
+										value="#{compromissoBean.medicoSelecionado}"
+										converter="pessoaConverter" style="width: 100%;">
+										<f:selectItems value="#{compromissoBean.listaMedico}"
+											var="medico" itemLabel="#{medico.nomePessoa}"
+											itemValue="#{medico}" />
+										<p:ajax update="compromissoDataTable" partialSubmit="true" />
+									</p:selectOneMenu>
+								</c:otherwise>
+							</c:choose>
+						</h:panelGroup>
+
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="divCalendar">
+					<p:calendar mode="inline" navigator="true"
+						value="#{compromissoBean.dataCalendario}">
+						<p:ajax event="dateSelect"
+							listener="#{compromissoBean.selecionarData}"
+							update="compromissoDataTable" />
+					</p:calendar>
+					<p />
+					<p:commandButton update=":compromissoDialog"
+						oncomplete="compromissoDialog.show();" value="Novo compromisso"
+						action="#{compromissoBean.editarCompromisso(0)}" disabled="#{fu:length(compromissoBean.listaConsultorio) == 0 or fu:length(compromissoBean.listaMedico) == 0}">
+					</p:commandButton>
+				</div>
+				<div class="divListaCompromisso">
+					<p:dataTable id="compromissoDataTable"
+						value="#{compromissoBean.listaCompromisso}" var="compromisso"
+						paginator="true" rows="5"
+						paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+						selection="#{compromissoBean.compromissoSelecionado}"
+						selectionMode="single" rowKey="#{compromisso.compromissoSq}">
+
+						<p:ajax event="rowSelect"
+							listener="#{compromissoBean.onRowSelect}"
+							oncomplete="historicoDialog.show();" update=":historicoDialog" />
+						<p:ajax event="rowUnselect"
+							listener="#{compromissoBean.onRowUnselect}" />
+
+						<p:column headerText="Hora">
+							<h:outputText value="#{compromisso.dataCompromisso}">
+								<f:convertDateTime pattern="HH:mm" />
+							</h:outputText>
+						</p:column>
+						<p:column headerText="Nome do Paciente">
+							<h:outputText value="#{compromisso.pessoaPaciente.nomePessoa}"></h:outputText>
+						</p:column>
+						<p:column headerText="Telefone">
+							<ui:repeat var="telefone"
+								value="#{compromisso.pessoaPaciente.telefones}">
+								<h:outputText
+									value="#{telefone.tipoTelefone.descricaoTipoTelefone}" /> - 
+							<h:outputText value="#{telefone.numeroTelefone}" />
+								<br />
+							</ui:repeat>
+						</p:column>
+						<p:column headerText="Ações">
+							<p:commandButton icon="ui-icon-circle-triangle-n"
+								action="#{compromissoBean.editarCompromisso(compromisso.compromissoSq)}"
+								update=":compromissoDialog"
+								oncomplete="PF('compromissoDialog').show();" />
+						</p:column>
+					</p:dataTable>
+				</div>
+			</div>
+		</h:form>
+
+		<p:outputPanel>
+			<p:dialog modal="true" id="historicoDialog"
+				widgetVar="historicoDialog">
+				<h:panelGroup>
+					<p:dataTable value="#{compromissoBean.listaObservacao}"
+						sortBy="dataObservacao" var="observacao">
+						<p:column style="width:500px;" headerText="Historico">
+							<h:outputText value="#{observacao.dataObservacao}" /> - 
+							<h:outputText value="#{observacao.observacao}" />
+						</p:column>
+					</p:dataTable>
+				</h:panelGroup>
+			</p:dialog>
+		</p:outputPanel>
+
+		<p:outputPanel>
+			<p:dialog modal="true" id="compromissoDialog"
+				widgetVar="compromissoDialog" header="Editar compromisso">
+				<ui:include src="editarCompromisso.xhtml" />
+				<p:ajax event="close" listener="#{compromissoBean.selecionarData()}"
+					update=":form:compromissoDataTable" />
+			</p:dialog>
+		</p:outputPanel>
+
+	</ui:define>
+</ui:composition>
+</html>

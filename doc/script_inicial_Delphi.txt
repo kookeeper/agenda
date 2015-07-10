@@ -1,0 +1,193 @@
+-- MySQL dump 10.11
+--
+-- Host: localhost    Database: agenda
+-- ------------------------------------------------------
+-- Server version	5.0.41-community-nt
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+--
+-- Table structure for table `compromisso`
+--
+
+DROP TABLE IF EXISTS `compromisso`;
+CREATE TABLE `compromisso` (
+  `compromisso_sq` int(10) unsigned NOT NULL auto_increment,
+  `data_compromisso` datetime NOT NULL,
+  `status_compromisso` int(10) unsigned NOT NULL,
+  `paciente_sq` int(10) unsigned NOT NULL,
+  `intervalo_compromisso` int(10) unsigned NOT NULL,
+  `descricao_compromisso` varchar(100) NOT NULL,
+  PRIMARY KEY  (`compromisso_sq`),
+  KEY `FK_compromisso_1` (`paciente_sq`),
+  CONSTRAINT `FK_compromisso_1` FOREIGN KEY (`paciente_sq`) REFERENCES `paciente` (`paciente_sq`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='Compromissos agendados';
+
+--
+-- Dumping data for table `compromisso`
+--
+
+LOCK TABLES `compromisso` WRITE;
+/*!40000 ALTER TABLE `compromisso` DISABLE KEYS */;
+/*!40000 ALTER TABLE `compromisso` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `compromisso_historico`
+--
+
+DROP TABLE IF EXISTS `compromisso_historico`;
+CREATE TABLE `compromisso_historico` (
+  `compromisso_historico_sq` int(10) unsigned NOT NULL auto_increment,
+  `compromisso_sq` int(10) unsigned NOT NULL,
+  `observacao` blob NOT NULL,
+  PRIMARY KEY  (`compromisso_historico_sq`),
+  KEY `FK_compromisso_historico_1` (`compromisso_sq`),
+  CONSTRAINT `FK_compromisso_historico_1` FOREIGN KEY (`compromisso_sq`) REFERENCES `compromisso` (`compromisso_sq`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='Registro de Historico do Compromisso';
+
+--
+-- Dumping data for table `compromisso_historico`
+--
+
+LOCK TABLES `compromisso_historico` WRITE;
+/*!40000 ALTER TABLE `compromisso_historico` DISABLE KEYS */;
+/*!40000 ALTER TABLE `compromisso_historico` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `paciente`
+--
+
+DROP TABLE IF EXISTS `paciente`;
+CREATE TABLE `paciente` (
+  `paciente_sq` int(10) unsigned NOT NULL auto_increment,
+  `nome_paciente` varchar(100) NOT NULL,
+  PRIMARY KEY  (`paciente_sq`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='Cadastro do paciente';
+
+--
+-- Dumping data for table `paciente`
+--
+
+LOCK TABLES `paciente` WRITE;
+/*!40000 ALTER TABLE `paciente` DISABLE KEYS */;
+/*!40000 ALTER TABLE `paciente` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `paciente_endereco`
+--
+
+DROP TABLE IF EXISTS `paciente_endereco`;
+CREATE TABLE `paciente_endereco` (
+  `paciente_endereco_sq` int(10) unsigned NOT NULL auto_increment,
+  `paciente_sq` int(10) unsigned NOT NULL,
+  `cep` varchar(8) default NULL,
+  `logradouro` varchar(100) default NULL,
+  `numero` varchar(45) default NULL,
+  `complemento` varchar(45) default NULL,
+  `tipo_endereco_sq` int(10) unsigned NOT NULL,
+  PRIMARY KEY  (`paciente_endereco_sq`),
+  KEY `FK_paciente_endereco_1` (`paciente_sq`),
+  KEY `FK_paciente_endereco_2` (`tipo_endereco_sq`),
+  CONSTRAINT `FK_paciente_endereco_2` FOREIGN KEY (`tipo_endereco_sq`) REFERENCES `tipo_endereco` (`tipo_endereco_sq`),
+  CONSTRAINT `FK_paciente_endereco_1` FOREIGN KEY (`paciente_sq`) REFERENCES `paciente` (`paciente_sq`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='Cadastro de Endereco do Paciente';
+
+--
+-- Dumping data for table `paciente_endereco`
+--
+
+LOCK TABLES `paciente_endereco` WRITE;
+/*!40000 ALTER TABLE `paciente_endereco` DISABLE KEYS */;
+/*!40000 ALTER TABLE `paciente_endereco` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `paciente_telefone`
+--
+
+DROP TABLE IF EXISTS `paciente_telefone`;
+CREATE TABLE `paciente_telefone` (
+  `paciente_telefone_sq` int(10) unsigned NOT NULL auto_increment,
+  `paciente_sq` int(10) unsigned NOT NULL,
+  `ddd_telefone` varchar(3) default NULL,
+  `numero_telefone` varchar(10) NOT NULL,
+  `complemento_telefone` varchar(45) default NULL,
+  `tipo_telefone_sq` int(10) unsigned NOT NULL,
+  PRIMARY KEY  (`paciente_telefone_sq`),
+  KEY `FK_paciente_telefone_1` (`paciente_sq`),
+  KEY `FK_paciente_telefone_2` (`tipo_telefone_sq`),
+  CONSTRAINT `FK_paciente_telefone_2` FOREIGN KEY (`tipo_telefone_sq`) REFERENCES `tipo_telefone` (`tipo_telefone_sq`),
+  CONSTRAINT `FK_paciente_telefone_1` FOREIGN KEY (`paciente_sq`) REFERENCES `paciente` (`paciente_sq`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='Cadastro de Telefone do Paciente';
+
+--
+-- Dumping data for table `paciente_telefone`
+--
+
+LOCK TABLES `paciente_telefone` WRITE;
+/*!40000 ALTER TABLE `paciente_telefone` DISABLE KEYS */;
+/*!40000 ALTER TABLE `paciente_telefone` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `tipo_endereco`
+--
+
+DROP TABLE IF EXISTS `tipo_endereco`;
+CREATE TABLE `tipo_endereco` (
+  `tipo_endereco_sq` int(10) unsigned NOT NULL auto_increment,
+  `descricao_tipo_endereco` varchar(100) NOT NULL,
+  PRIMARY KEY  (`tipo_endereco_sq`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='Cadastro de Tipo de Endereço';
+
+--
+-- Dumping data for table `tipo_endereco`
+--
+
+LOCK TABLES `tipo_endereco` WRITE;
+/*!40000 ALTER TABLE `tipo_endereco` DISABLE KEYS */;
+/*!40000 ALTER TABLE `tipo_endereco` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `tipo_telefone`
+--
+
+DROP TABLE IF EXISTS `tipo_telefone`;
+CREATE TABLE `tipo_telefone` (
+  `tipo_telefone_sq` int(10) unsigned NOT NULL auto_increment,
+  `descricao_tipo_telefone` varchar(100) NOT NULL,
+  PRIMARY KEY  (`tipo_telefone_sq`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='Cadastro de Tipo de Telefone';
+
+--
+-- Dumping data for table `tipo_telefone`
+--
+
+LOCK TABLES `tipo_telefone` WRITE;
+/*!40000 ALTER TABLE `tipo_telefone` DISABLE KEYS */;
+/*!40000 ALTER TABLE `tipo_telefone` ENABLE KEYS */;
+UNLOCK TABLES;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2013-07-08 18:56:31

@@ -1,0 +1,42 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition>
+	<h:form id="listaPessoaForm">
+		<p:dataTable value="#{pessoaBean.listaPessoa}" var="pessoa">
+			<p:column headerText="C.P.F.">
+				<h:outputText value="#{pessoa.cpfPessoa}" />
+			</p:column>
+			<p:column headerText="Nome">
+				<h:outputText value="#{pessoa.nomePessoa}" />
+			</p:column>
+			<p:column headerText="Acoes">
+				<p:commandButton icon="ui-icon-circle-triangle-n"
+					action="#{pessoaBean.editarPessoa(pessoa)}"
+					update=":editPessoaDialog"
+					oncomplete="PF('editPessoaDialog').show();" />
+				<p:commandButton icon="ui-icon-circle-minus"
+					rendered="#{!pessoaBean.pessoaUsuario(pessoa)}"
+					action="#{pessoaBean.excluirPessoa(pessoa)}"
+					update=":listaPessoaForm">
+					<p:confirm header="Excluir registro"
+						message="Deseja excluir o registro selecionado?"
+						icon="ui-icon-alert" />
+				</p:commandButton>
+			</p:column>
+		</p:dataTable>
+		<p:commandButton icon="ui-icon-circle-plus"
+			action="#{pessoaBean.adicionarPessoa}"
+			oncomplete="PF('editPessoaDialog').show();"
+			update=":editPessoaDialog" />
+		<p:commandButton icon="ui-icon-circle-close"
+			onclick="PF('editPessoasDialog').hide();">
+		</p:commandButton>
+	</h:form>
+</ui:composition>
+</html>

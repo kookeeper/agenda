@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pageflow:Pageflow xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pageflow="http://www.sybase.com/suade/pageflow" id="pf14006144056260" configfile="/consultorio/WebContent/WEB-INF/faces-config.xml">
+  <nodes xsi:type="pageflow:PFPage" name="login.xhtml" x="588" y="468" id="pf14013770173950" referenceLink="//@navigationRule.6/@fromViewId|" outlinks="pf14013770173951 pf14013770173952 pf14013770173953 pf14013770173954 pf14013770173955" inlinks="pf14013770173956" path="/login.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="criarUsuario.xhtml" x="360" y="533" id="pf14013770173957" referenceLink="//@navigationRule.2/@fromViewId|" outlinks="pf14013770173956" inlinks="pf14013770173951" path="/criarUsuario.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="criarUsuarioFacebook.xhtml" x="899" y="504" id="pf14013770173958" referenceLink="//@navigationRule.1/@navigationCase.1/@toViewId|" inlinks="pf14013770173952" path="/criarUsuarioFacebook.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="pages/agenda.xhtml" x="792" y="132" id="pf14013770173959" referenceLink="//@navigationRule.7/@fromViewId|" outlinks="pf140137701739510 pf140137701739511" inlinks="pf14013770173953 pf14013770173954 pf140137701739512 pf140137701739513" path="/pages/agenda.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="pages/listarConsultorio.xhtml" x="1032" y="67" id="pf140137701739514" referenceLink="//@navigationRule.4/@navigationCase.0/@toViewId|" outlinks="pf140137701739512" inlinks="pf140137701739510" path="/pages/listarConsultorio.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="pages/trocarSenha.xhtml" x="372" y="96" id="pf140137701739515" referenceLink="//@navigationRule.7/@navigationCase.0/@toViewId|" outlinks="pf140137701739513" inlinks="pf14013770173955 pf140137701739511" path="/pages/trocarSenha.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="*" id="pf140137769500825" referenceLink="//@navigationRule.0/@fromViewId|" outlinks="pf140137769500826" path="/*"/>
+  <nodes xsi:type="pageflow:PFPage" name="error.xhtml" id="pf140137769500827" referenceLink="//@navigationRule.0/@navigationCase.0/@toViewId|" inlinks="pf140137769500826" path="/error.xhtml"/>
+  <links id="pf14013770173951" target="pf14013770173957" source="pf14013770173950" outcome="novoUsuario" redirect="true"/>
+  <links id="pf14013770173952" target="pf14013770173958" source="pf14013770173950" outcome="novoUsuarioFacebook" redirect="true"/>
+  <links id="pf14013770173953" target="pf14013770173959" source="pf14013770173950" outcome="loginFB"/>
+  <links id="pf14013770173954" target="pf14013770173959" source="pf14013770173950" outcome="agenda"/>
+  <links id="pf14013770173956" target="pf14013770173950" source="pf14013770173957" outcome="login" redirect="true"/>
+  <links id="pf140137701739512" target="pf14013770173959" source="pf140137701739514" outcome="agenda"/>
+  <links id="pf140137701739510" target="pf140137701739514" source="pf14013770173959" outcome="listarConsultorio"/>
+  <links id="pf140137701739513" target="pf14013770173959" source="pf140137701739515" outcome="login"/>
+  <links id="pf14013770173955" target="pf140137701739515" source="pf14013770173950" outcome="trocarSenha"/>
+  <links id="pf140137701739511" target="pf140137701739515" source="pf14013770173959" outcome="trocarSenha"/>
+  <links id="pf140137769500826" target="pf140137769500827" source="pf140137769500825" outcome="error"/>
+</pageflow:Pageflow>
